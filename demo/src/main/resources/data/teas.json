@@ -1,7 +1,6 @@
-{
-  "teas": [
+[
     {
-      "id": 3,
+      "id": 1,
       "name": "Tie Guan Yin",
       "type": "Oolong Tea",
       "description": "It is a famous Chinese Oolong tea, originating from Anxi County in Fujian Province, known for its floral aroma, smooth texture, and slightly sweet aftertaste.",
@@ -10,6 +9,16 @@
       "stockQuantity":39900,
       "produceAt":"2023-06-01",
       "costPrice": 90
-    }
+    },
+  {
+    "id": 2,
+    "name": "juhua Tea",
+    "type": "Hua Tea",
+    "description": " juhua cha hen xiang .",
+    "sellPrice": 100,
+    "origin": "China",
+    "stockQuantity":600000,
+    "produceAt":"2024-06-01",
+    "costPrice": 50
+  }
   ]
-}
