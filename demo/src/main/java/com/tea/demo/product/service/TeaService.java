@@ -8,9 +8,13 @@ import java.util.List;
 
 public interface TeaService {
 
-         List<TeaResponseDto> getAllTeas();
-         TeaResponseDto getByID(Integer id);
-         Tea create(TeaRequestDto teaDto);
-         Tea update(TeaRequestDto teaDto, Integer id);
-         void delete(Integer id);
+    List<TeaResponseDto> getAllTeas();
+
+    TeaResponseDto getByID(Integer id);
+
+    Tea create(TeaRequestDto teaDto);
+
+    Tea update(TeaRequestDto teaDto, Integer id);
+
+    void delete(Integer id);
 }

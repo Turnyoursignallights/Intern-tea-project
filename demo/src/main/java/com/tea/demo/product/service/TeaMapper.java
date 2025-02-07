@@ -4,12 +4,11 @@ import com.tea.demo.product.Entity.Tea;
 import com.tea.demo.product.dto.TeaRequestDto;
 import com.tea.demo.product.dto.TeaResponseDto;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 
 public class TeaMapper {
-    public static TeaResponseDto toDto(Tea tea){
+    public static TeaResponseDto toDto(Tea tea) {
         return new TeaResponseDto(
                 tea.getId(),
                 tea.getName(),
@@ -20,7 +19,8 @@ public class TeaMapper {
                 tea.getProduceAt()
         );
     }
-    public static Tea toEntity(TeaRequestDto teaRequireDto){
+
+    public static Tea toEntity(TeaRequestDto teaRequireDto) {
         return Tea.builder()
                 .name(teaRequireDto.getName())  // Mandatory field
                 .type(teaRequireDto.getType())  // Mandatory field
@@ -33,6 +33,7 @@ public class TeaMapper {
                 .build();
 
     }
+
     public static void mergeFieldsForUpdate(Tea existingTea, TeaRequestDto teaRequestDto) {
         if (teaRequestDto.getName() != null) {
             existingTea.setName(teaRequestDto.getName());
@@ -59,8 +60,6 @@ public class TeaMapper {
             existingTea.setCostPrice(teaRequestDto.getCostPrice());
         }
     }
-
-
 
 
 }

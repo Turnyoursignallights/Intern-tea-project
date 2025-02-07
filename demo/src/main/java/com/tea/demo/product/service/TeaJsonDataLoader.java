@@ -23,11 +23,13 @@ public class TeaJsonDataLoader implements CommandLineRunner {
         this.objectMapper = objectMapper;
         this.teajson = teajson;
     }
+
     @Override
     public void run(String... args) throws Exception {
-        if(teajson.count() == 0) {
+        if (teajson.count() == 0) {
             try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/teas.json")) {
-                List<Tea> teaList = objectMapper.readValue(inputStream, new TypeReference<List<Tea>>() {});
+                List<Tea> teaList = objectMapper.readValue(inputStream, new TypeReference<List<Tea>>() {
+                });
 
                 log.info("Reading {} runs from JSON data and saving to collection.", teaList.size());
                 teajson.saveAll(teaList);

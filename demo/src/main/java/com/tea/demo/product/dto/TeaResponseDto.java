@@ -3,22 +3,21 @@ package com.tea.demo.product.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TeaResponseDto
-{
-Integer id;
-String name;
-String type;
-String description;
-double price;
-String origin;
-LocalDate produceAt;
-
+public class TeaResponseDto {
+    Integer id;
+    String name;
+    String type;
+    String description;
+    double price;
+    String origin;
+    LocalDate produceAt;
 
     public LocalDate getProduceAt() {
         return produceAt;

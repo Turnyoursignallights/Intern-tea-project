@@ -15,7 +15,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -26,7 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -53,18 +52,20 @@ public class TeaControllerTests {
     public void init() {
         tea = Tea.builder().name("new tea").type("new tea type").build();
     }
+
     @Test
     public void TeaController_CreateTea_ReturnCreated() throws Exception {
         //invoke the first argument which is the tea as the response, the actual logic of create not invoked
-        given(teaService.create(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        TeaRequestDto teaUpdated = TeaRequestDto.builder().name("New Nea DTO").type("new tea type DTO").build();
+        when(teaService.create(teaUpdated)).thenReturn(TeaMapper.toEntity(teaUpdated));
 
         ResultActions response = mockMvc.perform(post("/api/tea/create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(tea)));
+                .content(objectMapper.writeValueAsString(teaUpdated)));
 
         response.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(tea.getName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type", CoreMatchers.is(tea.getType())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(teaUpdated.getName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type", CoreMatchers.is(teaUpdated.getType())))
                 .andDo(MockMvcResultHandlers.print());
     }
 

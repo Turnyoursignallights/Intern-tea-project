@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class TeaServiceImp implements TeaService{
+public class TeaServiceImp implements TeaService {
 
     private final TeaRepositoryJpa teaRepositoryJpa;
 
@@ -28,48 +28,48 @@ public class TeaServiceImp implements TeaService{
     @Override
     public List<TeaResponseDto> getAllTeas() {
         List<TeaResponseDto> teasDto = teaRepositoryJpa.findAll().stream().map(TeaMapper::toDto).collect(Collectors.toList());
-        if (teasDto.isEmpty()){
+        if (teasDto.isEmpty()) {
             throw new TeaNotFoundException();
         }
         return teasDto;
     }
+
     @Override
-    public TeaResponseDto getByID(Integer id){
+    public TeaResponseDto getByID(Integer id) {
         Optional<TeaResponseDto> teaDto = teaRepositoryJpa.findById(id).map(TeaMapper::toDto);
-        if (teaDto.isEmpty()){
+        if (teaDto.isEmpty()) {
             throw new TeaNotFoundException();
-        }
-        else{
+        } else {
             return teaDto.get();
         }
     }
 
     @Override
-    public Tea create(TeaRequestDto teaDto){
+    public Tea create(TeaRequestDto teaDto) {
         Tea teaEntity = TeaMapper.toEntity(teaDto);
         Tea savedTea = teaRepositoryJpa.save(teaEntity);
         return savedTea;
     }
 
     @Override
-    public Tea update(TeaRequestDto teaRequestDto,Integer id){
+    public Tea update(TeaRequestDto teaRequestDto, Integer id) {
         Optional<Tea> existingteaOpt = teaRepositoryJpa.findById(id);
-        if(existingteaOpt.isPresent()){
+        if (existingteaOpt.isPresent()) {
             Tea existingTea = existingteaOpt.get();
             TeaMapper.mergeFieldsForUpdate(existingTea, teaRequestDto);
             return teaRepositoryJpa.save(existingTea);
-        }else{
+        } else {
             throw new TeaNotFoundException();
         }
 
     }
 
     @Override
-    public void delete(Integer id){
+    public void delete(Integer id) {
         Optional<Tea> tea = teaRepositoryJpa.findById(id);
-        if(tea.isPresent()){
+        if (tea.isPresent()) {
             teaRepositoryJpa.delete(tea.get());
-        }else{
+        } else {
             throw new TeaNotFoundException();
         }
     }

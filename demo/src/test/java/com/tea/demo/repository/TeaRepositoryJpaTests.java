@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -22,12 +23,12 @@ public class TeaRepositoryJpaTests {
     private TeaRepositoryJpa teaJpa;
 
     @Autowired
-    public TeaRepositoryJpaTests(TeaRepositoryJpa teaJpa){
-        this.teaJpa =teaJpa;
+    public TeaRepositoryJpaTests(TeaRepositoryJpa teaJpa) {
+        this.teaJpa = teaJpa;
     }
 
     @Test
-    public void TeaRepository_saveAll_ReturnSavedTea(){
+    public void TeaRepository_saveAll_ReturnSavedTea() {
         //Arrange
         Tea newTea = Tea.builder()
                 .name("New tea")

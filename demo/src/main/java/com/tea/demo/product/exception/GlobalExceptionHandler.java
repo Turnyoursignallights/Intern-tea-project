@@ -22,16 +22,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ProblemDetail> handleNoHandlerFoundException(NoHandlerFoundException ex) {
 
-            // Step 1: Create a ProblemDetail instance with status and message
-            ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-            problemDetail.setTitle("Route Not Found");
-            problemDetail.setDetail("The requested URL " + ex.getRequestURL() + " was not found on the server.");
+        // Step 1: Create a ProblemDetail instance with status and message
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Route Not Found");
+        problemDetail.setDetail("The requested URL " + ex.getRequestURL() + " was not found on the server.");
 
-            // Step 2: Add additional details if necessary (optional)
-            problemDetail.setProperty("timestamp", System.currentTimeMillis());
-            problemDetail.setProperty("error", "No handler found");
+        // Step 2: Add additional details if necessary (optional)
+        problemDetail.setProperty("timestamp", System.currentTimeMillis());
+        problemDetail.setProperty("error", "No handler found");
 
-            // Step 3: Return the ProblemDetail in the response
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
-        }
+        // Step 3: Return the ProblemDetail in the response
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
+    }
 }

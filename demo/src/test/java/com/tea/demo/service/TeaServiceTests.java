@@ -35,7 +35,7 @@ public class TeaServiceTests {
     private TeaServiceImp teaService;
 
     @Test
-    public void TeaService_CreatTea_ReturnTeaDto(){
+    public void TeaService_CreatTea_ReturnTeaDto() {
         Tea tea = Tea.builder()
                 .name("new tea")
                 .type("new tea type")
@@ -56,10 +56,10 @@ public class TeaServiceTests {
     }
 
     @Test
-    public void TeaService_GetAllTeas_ReturnsResponseDto(){
+    public void TeaService_GetAllTeas_ReturnsResponseDto() {
         Tea tea1 = Tea.builder().name("new tea1").type("new tea type1").sellPrice(100.1).build();
         Tea tea2 = Tea.builder().name("new tea2").type("new tea type2").sellPrice(100.1).build();
-        List<Tea> teas = Arrays.asList(tea1,tea2);
+        List<Tea> teas = Arrays.asList(tea1, tea2);
         // Mock the repository behavior
         when(teaJpa.findAll()).thenReturn(teas);
 
@@ -76,7 +76,7 @@ public class TeaServiceTests {
 
     @Test
     // The id is not generated in fact,the id=1 haven't been attached to the object
-    public void TeaService_GetTeaByID_ReturnTeaDto(){
+    public void TeaService_GetTeaByID_ReturnTeaDto() {
         Tea tea = Tea.builder()
                 .name("new tea")
                 .type("new tea type")
@@ -94,7 +94,7 @@ public class TeaServiceTests {
     }
 
     @Test
-    public void TeaService_UpdateTea_ReturnTea(){
+    public void TeaService_UpdateTea_ReturnTea() {
         Tea tea = Tea.builder()
                 .name("tea")
                 .type("tea type")
@@ -108,7 +108,7 @@ public class TeaServiceTests {
         when(teaJpa.findById(1)).thenReturn(Optional.ofNullable(tea));
 
         //Act
-        Tea result = teaService.update(teaDto,1);
+        Tea result = teaService.update(teaDto, 1);
 
         //Assert
         Assertions.assertThat(result.getName()).isEqualTo("updated tea");
@@ -146,7 +146,7 @@ public class TeaServiceTests {
 
     @Test
     // The id is not generated in fact,the id=1 haven't been attached to the object
-    public void TeaService_DeleteTeaByID_ReturnTeaDto(){
+    public void TeaService_DeleteTeaByID_ReturnTeaDto() {
         Tea tea = Tea.builder()
                 .name("new tea")
                 .type("new tea type")
@@ -157,7 +157,7 @@ public class TeaServiceTests {
 
         //Assert
         //?? not Sure if it is tested?
-        assertAll(()->teaService.delete(1));
+        assertAll(() -> teaService.delete(1));
         // Verify that findById() was called
         verify(teaJpa, times(1)).findById(1);
 //        // Verify that delete() was not called
