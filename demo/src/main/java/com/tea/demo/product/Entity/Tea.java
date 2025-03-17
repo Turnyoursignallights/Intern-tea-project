@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Builder
 @Entity
 public class Tea {
     @Id
@@ -34,6 +34,21 @@ public class Tea {
     @Positive
     Double costPrice;
 
+
+    public Tea() {
+    }
+
+    public Tea(Double costPrice, LocalDate produceAt, Integer stockQuantity, String origin, Double sellPrice, String description, String type, String name, Integer id) {
+        this.costPrice = costPrice;
+        this.produceAt = produceAt;
+        this.stockQuantity = stockQuantity;
+        this.origin = origin;
+        this.sellPrice = sellPrice;
+        this.description = description;
+        this.type = type;
+        this.name = name;
+        this.id = id;
+    }
 
     public String getName() {
         return name;

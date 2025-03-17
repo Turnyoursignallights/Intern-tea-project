@@ -3,8 +3,10 @@ package com.tea.demo.product.service;
 import com.tea.demo.product.Entity.Tea;
 import com.tea.demo.product.dto.TeaRequestDto;
 import com.tea.demo.product.dto.TeaResponseDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 public interface TeaService {
 

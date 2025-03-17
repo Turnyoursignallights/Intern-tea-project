@@ -50,13 +50,17 @@ public class TeaControllerTests {
 
     @BeforeEach
     public void init() {
-        tea = Tea.builder().name("new tea").type("new tea type").build();
+        tea = new Tea();
+        tea.setName("new tea");
+        tea.setType("new tea type");
     }
 
     @Test
     public void TeaController_CreateTea_ReturnCreated() throws Exception {
         //invoke the first argument which is the tea as the response, the actual logic of create not invoked
-        TeaRequestDto teaUpdated = TeaRequestDto.builder().name("New Nea DTO").type("new tea type DTO").build();
+        TeaRequestDto teaUpdated =new TeaRequestDto();
+        teaUpdated.setName("New Nea DTO");
+        teaUpdated.setType("new tea type DTO");
         when(teaService.create(teaUpdated)).thenReturn(TeaMapper.toEntity(teaUpdated));
 
         ResultActions response = mockMvc.perform(post("/api/tea/create")
@@ -71,7 +75,9 @@ public class TeaControllerTests {
 
     @Test
     public void TeaController_GetAllTea_ReturnResponseDto() throws Exception {
-        TeaResponseDto responseDto = TeaResponseDto.builder().name("New Tea").type("New Type").build();
+        TeaResponseDto responseDto = new TeaResponseDto();
+        responseDto.setName("New Tea");
+        responseDto.setType("New Type");
         List<TeaResponseDto> list = Arrays.asList(responseDto);
         when(teaService.getAllTeas()).thenReturn(list);
 
@@ -83,7 +89,10 @@ public class TeaControllerTests {
 
     @Test
     public void TeaController_GetTeaByID_ReturnCreated() throws Exception {
-        TeaResponseDto responseDto = TeaResponseDto.builder().name("new tea").type("new tea type").build();
+        TeaResponseDto responseDto = new TeaResponseDto();
+        responseDto.setName("new tea");
+        responseDto.setType("new tea type");
+
         when(teaService.getByID(1)).thenReturn(responseDto);
 
         ResultActions response = mockMvc.perform(get("/api/tea/1"));
@@ -97,7 +106,9 @@ public class TeaControllerTests {
 
     @Test
     public void TeaController_UpdateTea_ReturnTea() throws Exception {
-        TeaRequestDto teaUpdated = TeaRequestDto.builder().name("New Nea DTO").type("new tea type DTO").build();
+        TeaRequestDto teaUpdated = new TeaRequestDto();
+        teaUpdated.setName("New Nea DTO");
+        teaUpdated.setType("new tea type DTO");
         when(teaService.update(teaUpdated, 1)).thenReturn(TeaMapper.toEntity(teaUpdated));
 
         //simulates sending an HTTP PUT request to /api/tea/update/1.

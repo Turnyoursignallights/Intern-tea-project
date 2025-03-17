@@ -21,16 +21,18 @@ public class TeaMapper {
     }
 
     public static Tea toEntity(TeaRequestDto teaRequireDto) {
-        return Tea.builder()
-                .name(teaRequireDto.getName())  // Mandatory field
-                .type(teaRequireDto.getType())  // Mandatory field
-                .description(Optional.ofNullable(teaRequireDto.getDescription()).orElse("No description provided"))
-                .sellPrice(Optional.ofNullable(teaRequireDto.getSellPrice()).orElse(0.0))
-                .origin(Optional.ofNullable(teaRequireDto.getOrigin()).orElse("Unknown origin"))
-                .stockQuantity(Optional.ofNullable(teaRequireDto.getStockQuantity()).orElse(0))
-                .produceAt(Optional.ofNullable(teaRequireDto.getProduceAt()).orElse(null))
-                .costPrice(Optional.ofNullable(teaRequireDto.getCostPrice()).orElse(0.0))
-                .build();
+        Tea tea = new Tea();
+        tea.setName(teaRequireDto.getName());
+        tea.setType(teaRequireDto.getType());
+        tea.setDescription(Optional.ofNullable(teaRequireDto.getDescription()).orElse("No description provided"));
+        tea.setSellPrice(Optional.ofNullable(teaRequireDto.getSellPrice()).orElse(0.0));
+        tea.setOrigin(Optional.ofNullable(teaRequireDto.getOrigin()).orElse("Unknown origin"));
+        tea.setStockQuantity(Optional.ofNullable(teaRequireDto.getStockQuantity()).orElse(0));
+        tea.setProduceAt(Optional.ofNullable(teaRequireDto.getProduceAt()).orElse(null));
+        tea.setCostPrice(Optional.ofNullable(teaRequireDto.getCostPrice()).orElse(0.0));
+
+        return tea;
+
 
     }
 

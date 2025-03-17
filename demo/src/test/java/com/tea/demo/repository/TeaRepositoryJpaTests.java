@@ -30,10 +30,10 @@ public class TeaRepositoryJpaTests {
     @Test
     public void TeaRepository_saveAll_ReturnSavedTea() {
         //Arrange
-        Tea newTea = Tea.builder()
-                .name("New tea")
-                .type("New tea type")
-                .build();
+        Tea newTea = new Tea();
+        newTea.setName("New tea");
+        newTea.setType("New tea type");
+        
         //Act
         Tea savedTea = teaJpa.save(newTea);
         //Assert
@@ -43,12 +43,13 @@ public class TeaRepositoryJpaTests {
 
     @Test
     public void TeaRepository_GetAll_ReturnMoreThenOneTea() {
-        Tea tea1 = Tea.builder()
-                .name("tea1")
-                .type("tea1 type").build();
-        Tea tea2 = Tea.builder()
-                .name("tea2")
-                .type("tea2 type").build();
+        Tea tea1 = new Tea();
+        tea1.setName("tea1");
+        tea1.setType("tea1 type");
+        
+        Tea tea2 = new Tea();
+        tea2.setName("tea2");
+        tea2.setType("tea2 type");
 
         teaJpa.save(tea1);
         teaJpa.save(tea2);
@@ -60,10 +61,10 @@ public class TeaRepositoryJpaTests {
 
     @Test
     public void TeaRepository_GetOneID_ReturnFindIDTea() {
-        Tea newTea = Tea.builder()
-                .name("New tea")
-                .type("New tea Type")
-                .build();
+        Tea newTea = new Tea();
+        newTea.setName("New tea");
+        newTea.setType("New tea Type");
+        
         teaJpa.save(newTea);
 
         //jpa will pass back the id to newTea
@@ -74,9 +75,9 @@ public class TeaRepositoryJpaTests {
     @Test
     public void TeaRepository_UpdateTea_ReturnTeaNotNull() {
 
-        Tea newTea = Tea.builder()
-                .name("New tea")
-                .type("New tea type").build();
+        Tea newTea = new Tea();
+        newTea.setName("New tea");
+        newTea.setType("New tea type");
 
         teaJpa.save(newTea);
         Tea teaSaved = teaJpa.findById(newTea.getId()).get();
@@ -96,10 +97,10 @@ public class TeaRepositoryJpaTests {
 
     @Test
     public void TeaRepository_DeleteById_ReturnTeaIsNull() {
-        Tea newTea = Tea.builder()
-                .name("new tea")
-                .type("new tea type")
-                .build();
+        Tea newTea = new Tea();
+        newTea.setName("new tea");
+        newTea.setType("new tea type");
+        
         teaJpa.save(newTea);
 
         teaJpa.deleteById(newTea.getId());

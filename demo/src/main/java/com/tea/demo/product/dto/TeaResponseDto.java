@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Builder
 public class TeaResponseDto {
     Integer id;
@@ -18,6 +18,19 @@ public class TeaResponseDto {
     double price;
     String origin;
     LocalDate produceAt;
+
+    public TeaResponseDto() {
+    }
+
+    public TeaResponseDto(Integer id, String name, String type, String description, double price, String origin, LocalDate produceAt) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.price = price;
+        this.origin = origin;
+        this.produceAt = produceAt;
+    }
 
     public LocalDate getProduceAt() {
         return produceAt;

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Builder
 public class TeaRequestDto {
     String name;
@@ -19,6 +19,20 @@ public class TeaRequestDto {
     Integer stockQuantity;
     LocalDate produceAt;
     Double costPrice;
+
+    public TeaRequestDto(String type, String description, String name, Double sellPrice, String origin, Integer stockQuantity, LocalDate produceAt, Double costPrice) {
+        this.type = type;
+        this.description = description;
+        this.name = name;
+        this.sellPrice = sellPrice;
+        this.origin = origin;
+        this.stockQuantity = stockQuantity;
+        this.produceAt = produceAt;
+        this.costPrice = costPrice;
+    }
+
+    public TeaRequestDto() {
+    }
 
     public String getName() {
         return name;

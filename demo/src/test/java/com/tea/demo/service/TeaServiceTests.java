@@ -36,14 +36,14 @@ public class TeaServiceTests {
 
     @Test
     public void TeaService_CreatTea_ReturnTeaDto() {
-        Tea tea = Tea.builder()
-                .name("new tea")
-                .type("new tea type")
-                .build();
-        TeaRequestDto teaDto = TeaRequestDto.builder()
-                .name("new tea")
-                .type("new tea type")
-                .build();
+        Tea tea = new Tea();
+        tea.setName("new tea");
+        tea.setType("new tea type");
+
+        TeaRequestDto teaDto = new TeaRequestDto();
+        teaDto.setName("new tea");
+        teaDto.setType("new tea type");
+
         when(teaJpa.save(Mockito.any(Tea.class))).thenReturn(tea);
 
         //Act
@@ -57,8 +57,16 @@ public class TeaServiceTests {
 
     @Test
     public void TeaService_GetAllTeas_ReturnsResponseDto() {
-        Tea tea1 = Tea.builder().name("new tea1").type("new tea type1").sellPrice(100.1).build();
-        Tea tea2 = Tea.builder().name("new tea2").type("new tea type2").sellPrice(100.1).build();
+        Tea tea1 = new Tea();
+        tea1.setName("new tea1");
+        tea1.setType("new tea type1");
+        tea1.setSellPrice(100.1);
+        
+        Tea tea2 = new Tea();
+        tea2.setName("new tea2");
+        tea2.setType("new tea type2");
+        tea2.setSellPrice(100.1);
+        
         List<Tea> teas = Arrays.asList(tea1, tea2);
         // Mock the repository behavior
         when(teaJpa.findAll()).thenReturn(teas);
@@ -77,11 +85,11 @@ public class TeaServiceTests {
     @Test
     // The id is not generated in fact,the id=1 haven't been attached to the object
     public void TeaService_GetTeaByID_ReturnTeaDto() {
-        Tea tea = Tea.builder()
-                .name("new tea")
-                .type("new tea type")
-                .sellPrice(100.0)
-                .build();
+        Tea tea = new Tea();
+        tea.setName("new tea");
+        tea.setType("new tea type");
+        tea.setSellPrice(100.0);
+        
         when(teaJpa.findById(1)).thenReturn(Optional.ofNullable(tea));
 
         //Act
@@ -95,14 +103,14 @@ public class TeaServiceTests {
 
     @Test
     public void TeaService_UpdateTea_ReturnTea() {
-        Tea tea = Tea.builder()
-                .name("tea")
-                .type("tea type")
-                .build();
-        TeaRequestDto teaDto = TeaRequestDto.builder()
-                .name("updated tea")
-                .type("updated tea type")
-                .build();
+        Tea tea = new Tea();
+        tea.setName("tea");
+        tea.setType("tea type");
+        
+        TeaRequestDto teaDto = new TeaRequestDto();
+        teaDto.setName("updated tea");
+        teaDto.setType("updated tea type");
+        
         when(teaJpa.save(Mockito.any(Tea.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
         when(teaJpa.findById(1)).thenReturn(Optional.ofNullable(tea));
@@ -120,16 +128,14 @@ public class TeaServiceTests {
     @Test
     public void TeaService_UpdatePartialTea_ReturnTeaWithUnchangedFields() {
         // Arrange
-        Tea existingTea = Tea.builder()
-                .name("Original Tea")
-                .type("Original Type")
-                .description("Original Description")
-                .sellPrice(10.0)
-                .build();
+        Tea existingTea = new Tea();
+        existingTea.setName("Original Tea");
+        existingTea.setType("Original Type");
+        existingTea.setDescription("Original Description");
+        existingTea.setSellPrice(10.0);
 
-        TeaRequestDto teaDto = TeaRequestDto.builder()
-                .name("Updated Tea")
-                .build();  // Only 'name' is provided
+        TeaRequestDto teaDto = new TeaRequestDto();
+        teaDto.setName("Updated Tea");
 
         when(teaJpa.findById(1)).thenReturn(Optional.of(existingTea));
         when(teaJpa.save(Mockito.any(Tea.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -147,10 +153,10 @@ public class TeaServiceTests {
     @Test
     // The id is not generated in fact,the id=1 haven't been attached to the object
     public void TeaService_DeleteTeaByID_ReturnTeaDto() {
-        Tea tea = Tea.builder()
-                .name("new tea")
-                .type("new tea type")
-                .build();
+        Tea tea = new Tea();
+        tea.setName("new tea");
+        tea.setType("new tea type");
+        
         when(teaJpa.findById(1)).thenReturn(Optional.ofNullable(tea));
 
         //Act
