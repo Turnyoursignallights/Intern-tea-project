@@ -8,16 +8,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demo" />
+        <module name="tea-management" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="tea-management" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="demo" options="-parameters" />
+      <module name="tea-management" options="-parameters" />
     </option>
   </component>
 </project>
