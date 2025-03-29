@@ -1,115 +1,85 @@
 package com.tea.management.order.service;
 
-import com.tea.management.inventory.entity.Tea;
-import com.tea.management.inventory.repository.TeaRepositoryJpa;
-import com.tea.management.order.entity.Order;
-import com.tea.management.order.entity.OrderItem;
+import com.tea.management.order.dto.OrderRequestDto;
+import com.tea.management.order.dto.OrderResponseDto;
+import com.tea.management.order.dto.OrderStatusUpdateDto;
 import com.tea.management.order.entity.OrderStatus;
-import com.tea.management.order.exception.OrderNotFoundException;
-import com.tea.management.order.repository.OrderRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class OrderService {
+public interface OrderService {
+    /**
+     * Create a new order
+     *
+     * @param orderRequestDto Order creation request
+     * @return Created order details
+     */
+    OrderResponseDto createOrder(OrderRequestDto orderRequestDto);
 
-    private final OrderRepository orderRepository;
-    private final TeaRepositoryJpa teaRepository;
+    /**
+     * Get all orders
+     *
+     * @return List of all orders
+     */
+    List<OrderResponseDto> getAllOrders();
 
-    public OrderService(OrderRepository orderRepository, TeaRepositoryJpa teaRepository) {
-        this.orderRepository = orderRepository;
-        this.teaRepository = teaRepository;
-    }
+    /**
+     * Get order by ID
+     *
+     * @param orderId Order UUID
+     * @return Order details
+     */
+    OrderResponseDto getOrderById(UUID orderId);
 
-    @Transactional
-    public Order createOrder(Order order) {
-        // Validate and process each item in the order
-        for (OrderItem item : order.getItems()) {
-            Tea tea = teaRepository.findById(item.getTea().getId())
-                    .orElseThrow(() -> new RuntimeException("Tea not found with id: " + item.getTea().getId()));
+    /**
+     * Get orders by customer email
+     *
+     * @param email Customer email
+     * @return List of orders for the customer
+     */
+    List<OrderResponseDto> getOrdersByCustomerEmail(String email);
 
-            // Check inventory
-            if (tea.getStockQuantity() < item.getQuantity()) {
-                throw new IllegalArgumentException("Not enough stock for tea: " + tea.getName());
-            }
+    /**
+     * Get orders by status
+     *
+     * @param status Order status
+     * @return List of orders with the given status
+     */
+    List<OrderResponseDto> getOrdersByStatus(OrderStatus status);
 
-            // Update inventory
-            tea.setStockQuantity(tea.getStockQuantity() - item.getQuantity());
-            teaRepository.save(tea);
+    /**
+     * Get orders between dates
+     *
+     * @param startDate Start date
+     * @param endDate   End date
+     * @return List of orders in the date range
+     */
+    List<OrderResponseDto> getOrdersByDateRange(LocalDateTime startDate, LocalDateTime endDate);
 
-            // Set the tea and price
-            item.setTea(tea);
-            item.setPrice(tea.getSellPrice());
-            item.setOrder(order);
-        }
+    /**
+     * Update order status
+     *
+     * @param statusUpdateDto Status update request
+     * @return Updated order details
+     */
+    OrderResponseDto updateOrderStatus(OrderStatusUpdateDto statusUpdateDto);
 
-        // Calculate total
-        double total = 0.0;
-        for (OrderItem item : order.getItems()) {
-            total += item.getPrice() * item.getQuantity();
-        }
-        order.setTotalAmount(total);
+    /**
+     * Cancel an order
+     *
+     * @param orderId Order UUID
+     * @return Updated order details
+     */
+    OrderResponseDto cancelOrder(UUID orderId);
 
-        return orderRepository.save(order);
-    }
-
-    public Order getOrderById(UUID id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
-    }
-
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
-    public List<Order> getOrdersByCustomerEmail(String email) {
-        return orderRepository.findByCustomerEmail(email);
-    }
-
-    public List<Order> getOrdersByStatus(OrderStatus status) {
-        return orderRepository.findByStatus(status);
-    }
-
-    public List<Order> getOrdersByDateRange(LocalDateTime start, LocalDateTime end) {
-        return orderRepository.findByOrderDateBetween(start, end);
-    }
-
-    @Transactional
-    public Order updateOrderStatus(UUID id, OrderStatus status) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
-
-        // If cancelling an order, restore inventory
-        if (status == OrderStatus.CANCELLED && order.getStatus() != OrderStatus.CANCELLED) {
-            restoreInventory(order);
-        }
-
-        order.setStatus(status);
-        return orderRepository.save(order);
-    }
-
-    @Transactional
-    public void deleteOrder(UUID id) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
-
-        // Restore inventory if deleting an order that's not cancelled
-        if (order.getStatus() != OrderStatus.CANCELLED) {
-            restoreInventory(order);
-        }
-
-        orderRepository.delete(order);
-    }
-
-    private void restoreInventory(Order order) {
-        for (OrderItem item : order.getItems()) {
-            Tea tea = item.getTea();
-            tea.setStockQuantity(tea.getStockQuantity() + item.getQuantity());
-            teaRepository.save(tea);
-        }
-    }
+    /**
+     * Update an existing order
+     *
+     * @param orderId         Order UUID
+     * @param orderRequestDto Order update request
+     * @return Updated order details
+     */
+    OrderResponseDto updateOrder(UUID orderId, OrderRequestDto orderRequestDto);
 }

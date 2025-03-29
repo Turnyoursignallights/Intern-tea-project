@@ -3,6 +3,7 @@ package com.tea.management.order.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.tea.management.inventory.entity.Tea;
 import jakarta.persistence.*;
+
 import java.util.UUID;
 
 @Entity
@@ -22,7 +23,6 @@ public class OrderItem {
     private Tea tea;
 
     private Integer quantity;
-
     private Double price; // Price at time of order
 
     public OrderItem() {

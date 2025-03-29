@@ -3,21 +3,27 @@ package com.tea.management.order.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tea.management.inventory.entity.Tea;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_order_number", columnNames = {"order_number"})
+})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "order_number", unique = true)
+    private String orderNumber;
 
     private String customerName;
     private String customerEmail;
     private String shippingAddress;
+    private String customerPhone;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -30,6 +36,34 @@ public class Order {
     private List<OrderItem> items = new ArrayList<>();
 
     private Double totalAmount;
+
+    // Fulfillment tracking
+    private LocalDateTime shipDate;
+    private String deliveryMethod;
+    private String trackingNumber;
+
+    // Payment information
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+
+
+    // Additional enums needed
+    public enum PaymentMethod {
+        CREDIT_CARD,
+        PAYPAL,
+        BANK_TRANSFER,
+        CASH_ON_DELIVERY
+    }
+
+    public enum PaymentStatus {
+        PENDING,
+        PAID,
+        FAILED,
+        REFUNDED
+    }
 
     public Order() {
         this.orderDate = LocalDateTime.now();
@@ -61,6 +95,7 @@ public class Order {
             this.totalAmount += item.getPrice() * item.getQuantity();
         }
     }
+
 
     // Getters and Setters
     public UUID getId() {
@@ -133,5 +168,61 @@ public class Order {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    public LocalDateTime getShipDate() {
+        return shipDate;
+    }
+
+    public void setShipDate(LocalDateTime shipDate) {
+        this.shipDate = shipDate;
+    }
+
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(String deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }

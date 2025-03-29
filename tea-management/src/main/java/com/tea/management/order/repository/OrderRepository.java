@@ -13,6 +13,8 @@ import java.util.UUID;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, UUID> {
     List<Order> findByCustomerEmail(String email);
+
     List<Order> findByStatus(OrderStatus status);
+
     List<Order> findByOrderDateBetween(LocalDateTime start, LocalDateTime end);
 }

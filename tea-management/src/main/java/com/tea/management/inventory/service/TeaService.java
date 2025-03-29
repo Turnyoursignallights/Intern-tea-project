@@ -6,7 +6,6 @@ import com.tea.management.inventory.dto.TeaResponseDto;
 
 import java.util.List;
 
-
 public interface TeaService {
 
     List<TeaResponseDto> getAllTeas();

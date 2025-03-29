@@ -3,7 +3,6 @@ package com.tea.management.inventory.service;
 import com.tea.management.inventory.entity.Tea;
 import com.tea.management.inventory.dto.TeaRequestDto;
 import com.tea.management.inventory.exception.TeaNotFoundException;
-//import com.tea.demo.product.repository.TeaRepository;
 import com.tea.management.inventory.dto.TeaResponseDto;
 import com.tea.management.inventory.repository.TeaRepositoryJpa;
 import org.springframework.stereotype.Service;
@@ -12,18 +11,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 public class TeaServiceImp implements TeaService {
 
     private final TeaRepositoryJpa teaRepositoryJpa;
 
-
     public TeaServiceImp(TeaRepositoryJpa teaRepositoryJpa) {
         this.teaRepositoryJpa = teaRepositoryJpa;
-
     }
-
 
     @Override
     public List<TeaResponseDto> getAllTeas() {
@@ -61,7 +56,6 @@ public class TeaServiceImp implements TeaService {
         } else {
             throw new TeaNotFoundException();
         }
-
     }
 
     @Override
@@ -73,6 +67,4 @@ public class TeaServiceImp implements TeaService {
             throw new TeaNotFoundException();
         }
     }
-
-
 }

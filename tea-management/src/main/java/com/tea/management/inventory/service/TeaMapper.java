@@ -6,7 +6,6 @@ import com.tea.management.inventory.dto.TeaResponseDto;
 
 import java.util.Optional;
 
-
 public class TeaMapper {
     public static TeaResponseDto toDto(Tea tea) {
         return new TeaResponseDto(
@@ -30,9 +29,7 @@ public class TeaMapper {
         tea.setStockQuantity(Optional.ofNullable(teaRequireDto.getStockQuantity()).orElse(0));
         tea.setProduceAt(Optional.ofNullable(teaRequireDto.getProduceAt()).orElse(null));
         tea.setCostPrice(Optional.ofNullable(teaRequireDto.getCostPrice()).orElse(0.0));
-
         return tea;
-
 
     }
 
@@ -62,6 +59,4 @@ public class TeaMapper {
             existingTea.setCostPrice(teaRequestDto.getCostPrice());
         }
     }
-
-
 }

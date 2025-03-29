@@ -10,9 +10,7 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.Objects;
 
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
+
 @Entity
 public class Tea {
     @Id
@@ -31,7 +29,6 @@ public class Tea {
     @Positive
     Double costPrice;
 
-
     public Tea() {
     }
 
@@ -47,6 +44,7 @@ public class Tea {
         this.id = id;
     }
 
+    //Setter and getter
     public String getName() {
         return name;
     }

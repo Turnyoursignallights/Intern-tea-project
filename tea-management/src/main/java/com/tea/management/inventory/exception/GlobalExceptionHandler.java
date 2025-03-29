@@ -9,14 +9,17 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    // Handle tea not found
     @ExceptionHandler({TeaNotFoundException.class})
     public ResponseEntity<ProblemDetail> handleTeaNotFoundException(TeaNotFoundException exception) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problemDetail.setTitle("Resource Not Found");
         problemDetail.setDetail(exception.getMessage());
         problemDetail.setProperty("timestamp", System.currentTimeMillis());
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
     }
+
 
     // Handle 404 errors (route not found)
     @ExceptionHandler(NoHandlerFoundException.class)
@@ -26,12 +29,9 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problemDetail.setTitle("Route Not Found");
         problemDetail.setDetail("The requested URL " + ex.getRequestURL() + " was not found on the server.");
-
-        // Step 2: Add additional details if necessary (optional)
         problemDetail.setProperty("timestamp", System.currentTimeMillis());
         problemDetail.setProperty("error", "No handler found");
 
-        // Step 3: Return the ProblemDetail in the response
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
     }
 }

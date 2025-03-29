@@ -5,8 +5,6 @@ import lombok.Builder;
 import java.time.LocalDate;
 import java.util.Objects;
 
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Builder
 public class TeaRequestDto {
     String name;
@@ -32,6 +30,8 @@ public class TeaRequestDto {
     public TeaRequestDto() {
     }
 
+
+    //Setter and getter
     public String getName() {
         return name;
     }

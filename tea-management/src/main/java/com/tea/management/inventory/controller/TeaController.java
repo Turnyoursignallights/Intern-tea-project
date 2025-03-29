@@ -1,6 +1,5 @@
 package com.tea.management.inventory.controller;
 
-
 import com.tea.management.inventory.entity.Tea;
 import com.tea.management.inventory.dto.TeaRequestDto;
 import com.tea.management.inventory.dto.TeaResponseDto;
@@ -14,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tea/")
 public class TeaController {
-
     private final TeaService teaService;
 
     public TeaController(TeaService teaService) {
@@ -32,20 +30,21 @@ public class TeaController {
         return tea;
     }
 
+    //Create the tea
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public Tea create(@Valid @RequestBody TeaRequestDto teaDto) {
         return teaService.create(teaDto);
     }
 
-    //update the tea
+    //Update the tea
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/update/{id}")
     public Tea update(@Valid @RequestBody TeaRequestDto teaDto, @PathVariable Integer id) {
         return teaService.update(teaDto, id);
     }
 
-    //delete the tea
+    //Delete the tea
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id) {

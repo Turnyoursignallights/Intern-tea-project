@@ -5,8 +5,6 @@ import lombok.Builder;
 import java.time.LocalDate;
 import java.util.Objects;
 
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Builder
 public class TeaResponseDto {
     Integer id;
@@ -30,6 +28,7 @@ public class TeaResponseDto {
         this.produceAt = produceAt;
     }
 
+    //setter and getter
     public LocalDate getProduceAt() {
         return produceAt;
     }
