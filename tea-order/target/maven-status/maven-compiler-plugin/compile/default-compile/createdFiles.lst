@@ -1,5 +1,0 @@
-com\tea\order\controller\OrderController.class
-com\tea\order\repository\OrderRepository.class
-com\tea\order\controller\OrderRequest.class
-com\tea\order\TeaOrderApplication.class
-com\tea\order\entity\Order.class
